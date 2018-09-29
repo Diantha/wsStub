@@ -1,12 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SoapClientSd</groupId>
 	<artifactId>SoapClientSd</artifactId>
-	<version>0.0.7</version>
-
+	<version>0.0.1</version>
+	
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 
@@ -21,8 +20,8 @@
 		<wsdl>http://localhost:8080/SoapSd/UniboServices?wsdl</wsdl>
 
 		<!-- Opzioni base -->
-		<ws.stub.package.name>it.unibo.services</ws.stub.package.name>
-		<service.name></service.name>
+		<ws.stub.package.name>it.unibo.test.services</ws.stub.package.name>
+		<service.name>ws</service.name>
 
 		<!-- Generici -->
 		<junit.version>3.8.1</junit.version>
@@ -55,142 +54,143 @@
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<pluginManagement>
-			<plugins>
+		<plugins>
 
-				<plugin>
-					<groupId>org.apache.cxf</groupId>
-					<artifactId>cxf-codegen-plugin</artifactId>
-					<version>${cxf.version}</version>
-					<executions>
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf.version}</version>
+				<executions>
 
-						<execution>
-							<id>generate-sources</id>
-							<phase>generate-sources</phase>
-							<goals>
-								<goal>wsdl2java</goal>
-							</goals>
-							<configuration>
-								<tasks>
-									<echo>Using WSDL ${wsdl}</echo>
-								</tasks>
-								<sourceRoot>target/generated-sources</sourceRoot>
-								<wsdlOptions>
-									<wsdlOption>
-										<wsdl>${wsdl}</wsdl>
-										<extraargs>
-											<extraarg>-verbose</extraarg>
-											<extraarg>-client</extraarg>
-											<extraarg>-frontend</extraarg>
-											<extraarg>jaxws21</extraarg>
-											<extraarg>-p</extraarg>
-											<extraarg>http://service.ws.nam/=${ws.stub.package.name}.${service.name}</extraarg>
-										</extraargs>
-									</wsdlOption>
-								</wsdlOptions>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Using WSDL ${wsdl}</echo>
+							</tasks>
+							<sourceRoot>target/generated-sources</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${wsdl}</wsdl>
+									<extraargs>
+										<extraarg>-verbose</extraarg>
+										<extraarg>-client</extraarg>
+										<extraarg>-frontend</extraarg>
+										<extraarg>jaxws21</extraarg>
+										<extraarg>-p</extraarg>
+										<extraarg>${ws.stub.package.name}.${service.name}</extraarg>
+									</extraargs>
+								</wsdlOption>
+							</wsdlOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven-compiler-plugin.version}</version>
-					<configuration>
-						<source>${jdk.source}</source>
-						<target>${jdk.target}</target>
-					</configuration>
-				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${jdk.source}</source>
+					<target>${jdk.target}</target>
+				</configuration>
+			</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>${maven-source-plugin.version}</version>
-					<executions>
-						<execution>
-							<id>attach-sources</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${maven-source-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>${maven-javadoc-plugin.version}</version>
-					<executions>
-						<execution>
-							<id>attach-javadocs</id>
-							<goals>
-								<goal>jar</goal>
-							</goals>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<additionalparam>${javadoc.opts}</additionalparam>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<reportPlugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
 							<configuration>
 								<additionalparam>${javadoc.opts}</additionalparam>
 							</configuration>
-						</execution>
-					</executions>
-				</plugin>
+						</plugin>
+					</reportPlugins>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<!-- git commit message -->
+					<message>Maven artifacts for ${project.version}</message>
+					<!-- disable webpage processing -->
+					<noJekyll>true</noJekyll>
+					<!-- matches distribution management repository url above -->
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.3</version>
-					<configuration>
-						<reportPlugins>
-							<plugin>
-								<groupId>org.apache.maven.plugins</groupId>
-								<artifactId>maven-javadoc-plugin</artifactId>
-								<configuration>
-									<additionalparam>${javadoc.opts}</additionalparam>
-								</configuration>
-							</plugin>
-						</reportPlugins>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>com.github.github</groupId>
-					<artifactId>site-maven-plugin</artifactId>
-					<version>0.8</version>
-					<configuration>
-						<!-- git commit message -->
-						<message>Maven artifacts for ${project.version}</message>
-						<!-- disable webpage processing -->
-						<noJekyll>true</noJekyll>
-						<!-- matches distribution management repository url above -->
-						<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-
-						<merge>true</merge>
-						<includes>
-							<include>**/*</include>
-						</includes>
-						<!-- github repo name -->
-						<repositoryName>wsStub</repositoryName>
-						<!-- github username -->
-						<repositoryOwner>Diantha</repositoryOwner>
-					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>site</goal>
-							</goals>
-							<phase>deploy</phase>
-						</execution>
-					</executions>
-				</plugin>
-
-			</plugins>
-		</pluginManagement>
+					<merge>true</merge>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<!-- github repo name -->
+					<repositoryName>wsStub</repositoryName>
+					<!-- github username -->
+					<repositoryOwner>Diantha</repositoryOwner>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+</pluginManagement>
 	</build>
-
-	<distributionManagement>
+	
+		<distributionManagement>
 		<repository>
 			<id>internal</id>
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
-
+	
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
