@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SoapClientSd</groupId>
 	<artifactId>SoapClientSd</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
@@ -21,7 +21,6 @@
 
 		<!-- Opzioni base -->
 		<ws.stub.package.name>it.unibo.test.services</ws.stub.package.name>
-		<service.name>ws</service.name>
 
 		<!-- Generici -->
 		<junit.version>3.8.1</junit.version>
@@ -35,7 +34,7 @@
 		<!-- Maven Plugin -->
 		<maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
 		<maven-source-plugin.version>3.0.0</maven-source-plugin.version>
-		<maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
 
 	</properties>
 
@@ -50,6 +49,7 @@
 			</properties>
 		</profile>
 	</profiles>
+
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -82,7 +82,7 @@
 										<extraarg>-frontend</extraarg>
 										<extraarg>jaxws21</extraarg>
 										<extraarg>-p</extraarg>
-										<extraarg>${ws.stub.package.name}.${service.name}</extraarg>
+										<extraarg>${ws.stub.package.name}</extraarg>
 									</extraargs>
 								</wsdlOption>
 							</wsdlOptions>
@@ -178,9 +178,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			
 		</plugins>
-</pluginManagement>
+	</pluginManagement>
 	</build>
 	
 		<distributionManagement>
@@ -189,7 +188,6 @@
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
-	
 	
 	<dependencies>
 		<dependency>
