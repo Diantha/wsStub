@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>SoapClientSd</groupId>
-	<artifactId>SoapClientSd</artifactId>
-	<version>0.0.3</version>
+	<groupId>wsStub</groupId>
+	<artifactId>wsStub</artifactId>
+	<version>0.0.5</version>
 
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
@@ -14,7 +14,7 @@
 	<!-- Opzioni base -->
 	<!-- ============ -->
 	<properties>
-		<wsdl>http://localhost:8080/SoapSd/UniboServices?wsdl</wsdl>
+		<wsdl>http://localhost:9080/SoapSd/UniboServices?wsdl</wsdl>
 
 		<!-- Opzioni base -->
 		<ws.stub.package.name>it.unibo.test.services</ws.stub.package.name>
