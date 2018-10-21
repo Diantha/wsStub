@@ -1,0 +1,122 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>wsStub</groupId>
+	<artifactId>wsStub</artifactId>
+	<version>0.0.6</version>
+
+	<packaging>jar</packaging>
+	<name>${project.artifactId}</name>
+
+	<!-- ============ -->
+	<!-- Opzioni base -->
+	<!-- ============ -->
+	<properties>
+		<wsdl>http://localhost:9080/SoapSd/UniboServices?wsdl</wsdl>
+
+		<!-- Opzioni base -->
+		<ws.stub.package.name>it.unibo.test.services</ws.stub.package.name>
+
+		<!-- Specifici -->
+		<cxf.version>2.5.2</cxf.version>
+
+	</properties>
+
+	<build>
+		<sourceDirectory>src/main/java</sourceDirectory>
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-codegen-plugin</artifactId>
+					<version>${cxf.version}</version>
+					<executions>
+
+						<execution>
+							<id>generate-sources</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>wsdl2java</goal>
+							</goals>
+							<configuration>
+								<tasks>
+									<echo>Using WSDL ${wsdl}</echo>
+								</tasks>
+								<sourceRoot>target/generated-sources</sourceRoot>
+								<wsdlOptions>
+									<wsdlOption>
+										<wsdl>${wsdl}</wsdl>
+										<extraargs>
+											<extraarg>-verbose</extraarg>
+											<extraarg>-client</extraarg>
+											<extraarg>-frontend</extraarg>
+											<extraarg>jaxws21</extraarg>
+											<extraarg>-p</extraarg>
+											<extraarg>${ws.stub.package.name}</extraarg>
+										</extraargs>
+									</wsdlOption>
+								</wsdlOptions>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+
+				<plugin>
+					<groupId>com.github.github</groupId>
+					<artifactId>site-maven-plugin</artifactId>
+					<version>0.8</version>
+					<configuration>
+						<!-- git commit message -->
+						<message>Maven artifacts for ${project.version}</message>
+						<!-- disable webpage processing -->
+						<noJekyll>true</noJekyll>
+						<!-- matches distribution management repository url above -->
+						<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+
+						<merge>true</merge>
+						<includes>
+							<include>**/*</include>
+						</includes>
+						<!-- github repo name -->
+						<repositoryName>wsStub</repositoryName>
+						<!-- github username -->
+						<repositoryOwner>Diantha</repositoryOwner>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>site</goal>
+							</goals>
+							<phase>deploy</phase>
+						</execution>
+					</executions>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+	</build>
+
+		<distributionManagement>
+		<repository>
+			<id>internal</id>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-bundle</artifactId>
+			<version>${cxf.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
+
